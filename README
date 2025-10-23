@@ -1,0 +1,308 @@
+📚 Sistema de Gerenciamento de Biblioteca em C
+
+Disciplina: Estruturas de Dados
+Professor: Joan Melo
+Data: Outubro 2025
+
+📋 Descrição do Projeto
+Sistema completo de gerenciamento de biblioteca desenvolvido em linguagem C, utilizando três estruturas de dados fundamentais:
+
+Lista Encadeada - Catálogo de livros
+Fila (FIFO) - Lista de espera por livros emprestados
+Pilha (LIFO) - Histórico de operações
+
+O sistema permite cadastrar livros, realizar empréstimos e devoluções, gerenciar filas de espera, consultar histórico e gerar relatórios completos.
+
+🎯 Objetivos Alcançados
+✅ Implementação completa de Lista Encadeada do zero
+✅ Implementação completa de Fila com princípio FIFO
+✅ Implementação completa de Pilha com princípio LIFO
+✅ Gerenciamento dinâmico de memória (malloc/free)
+✅ Interface de menu interativa e intuitiva
+✅ Sistema de busca case-insensitive
+✅ Histórico completo de operações
+✅ Fila de espera para livros emprestados
+✅ Relatórios estatísticos do sistema
+✅ Código totalmente comentado em português
+✅ Tratamento de erros e validações
+
+🏗️ Arquitetura do Sistema
+Estrutura de Arquivos
+projeto-biblioteca/
+├── biblioteca.h        # Declarações de structs e funções
+├── biblioteca.c        # Implementação das estruturas de dados
+├── main.c              # Menu principal e interface do usuário
+├── CMakeLists.txt      # Configuração para CLion
+└── README.md           # Este arquivo (documentação)
+Estruturas de Dados
+1️⃣ Lista Encadeada (Catálogo de Livros)
+Struct Livro:
+
+titulo (string, 100 chars)
+autor (string, 100 chars)
+ano_publicacao (int)
+isbn (string, 20 chars - opcional)
+status (bool - true = disponível)
+nome_leitor_atual (string, 100 chars)
+data_emprestimo (time_t)
+
+Operações Implementadas:
+
+✅ adicionar_livro() - Insere livro no final
+✅ buscar_por_titulo() - Busca case-insensitive
+✅ buscar_por_autor() - Busca parcial
+✅ remover_livro() - Remove por título
+✅ listar_todos_livros() - Lista catálogo completo
+✅ listar_livros_disponiveis() - Filtra disponíveis
+✅ listar_livros_emprestados() - Filtra emprestados
+
+2️⃣ Fila (Lista de Espera)
+Struct Solicitacao:
+
+nome_leitor (string)
+titulo_livro (string)
+data_solicitacao (time_t)
+
+Operações Implementadas:
+
+✅ enfileirar() - Adiciona ao final (FIFO)
+✅ desenfileirar_especifico() - Remove primeiro da fila
+✅ consultar_posicao() - Retorna posição do leitor
+✅ listar_fila_livro() - Lista fila de um livro
+✅ listar_todas_filas() - Lista todas as solicitações
+
+3️⃣ Pilha (Histórico)
+Struct Operacao:
+
+tipo_operacao (string - "EMPRESTIMO" ou "DEVOLUCAO")
+titulo_livro (string)
+nome_leitor (string)
+data_operacao (time_t)
+
+Operações Implementadas:
+
+✅ empilhar() - Adiciona ao topo (LIFO)
+✅ exibir_historico() - Lista últimas N operações
+✅ historico_livro() - Filtra por livro específico
+
+
+🚀 Como Compilar e Executar
+Opção 1: CLion (Recomendado)
+
+Abra o CLion
+Abra o projeto:
+
+File → Open → Selecione a pasta do projeto
+
+
+Compile:
+
+Build → Build Project (ou Ctrl+F9)
+
+
+Execute:
+
+Run → Run 'biblioteca' (ou Shift+F10)
+
+
+
+Opção 2: Terminal (GCC)
+bash# Navegar até a pasta do projeto
+cd caminho/do/projeto
+
+# Compilar todos os arquivos
+gcc -Wall -Wextra -std=c99 -o biblioteca main.c biblioteca.c
+
+# Executar o programa
+./biblioteca
+Opção 3: Windows (MinGW)
+cmdgcc -Wall -Wextra -std=c99 -o biblioteca.exe main.c biblioteca.c
+biblioteca.exe
+
+📖 Manual de Uso
+Menu Principal
+╔════════════════════════════════════════════════════════╗
+║                   MENU PRINCIPAL                       ║
+╠════════════════════════════════════════════════════════╣
+║  1. Cadastrar Novo Livro                               ║
+║  2. Emprestar Livro                                    ║
+║  3. Devolver Livro                                     ║
+║  4. Consultar Livros                                   ║
+║  5. Ver Fila de Espera                                 ║
+║  6. Ver Histórico                                      ║
+║  7. Relatório do Sistema                               ║
+║  8. Remover Livro (Bônus)                              ║
+║  9. Sair                                               ║
+╚════════════════════════════════════════════════════════╝
+Funcionalidades Detalhadas
+1. Cadastrar Novo Livro
+
+Solicita: título, autor, ano de publicação e ISBN (opcional)
+Valida se o livro já existe no catálogo
+Adiciona automaticamente com status "disponível"
+
+2. Emprestar Livro
+
+Se disponível: Registra empréstimo e adiciona ao histórico
+Se emprestado: Adiciona leitor à fila de espera automaticamente
+Exibe posição na fila
+
+3. Devolver Livro
+
+Marca livro como disponível
+Registra devolução no histórico
+Notifica automaticamente o próximo leitor da fila (se houver)
+
+4. Consultar Livros (Submenu)
+
+Listar todos os livros
+Buscar por título (case-insensitive)
+Buscar por autor (busca parcial)
+Filtrar apenas disponíveis
+Filtrar apenas emprestados
+
+5. Ver Fila de Espera (Submenu)
+
+Ver fila de um livro específico
+Ver todas as solicitações
+Consultar sua posição na fila
+
+6. Ver Histórico (Submenu)
+
+Ver histórico completo
+Ver últimas N operações
+Ver histórico de um livro específico
+
+7. Relatório do Sistema
+
+Total de livros no catálogo
+Livros disponíveis vs emprestados
+Leitores nas filas de espera
+Operações registradas
+
+8. Remover Livro (Bônus)
+
+Remove livro do catálogo
+Pede confirmação (operação irreversível)
+
+9. Sair
+
+Libera toda a memória alocada
+Encerra o programa de forma segura
+
+
+🧪 Exemplos de Uso
+Cenário 1: Cadastrar e Emprestar
+1. Cadastrar Livro
+   Título: Clean Code
+   Autor: Robert Martin
+   Ano: 2008
+   ISBN: 978-0132350884
+
+2. Emprestar Livro
+   Título: Clean Code
+   Leitor: João Silva
+   ✓ Empréstimo realizado!
+
+3. Emprestar Livro (mesmo livro)
+   Título: Clean Code
+   Leitor: Maria Santos
+   ⚠ Livro emprestado! Você foi adicionado à fila.
+   Posição: 1
+Cenário 2: Devolução com Fila
+3. Devolver Livro
+   Título: Clean Code
+   ✓ Devolução realizada!
+   📢 NOTIFICAÇÃO: Maria Santos estava aguardando.
+Cenário 3: Consultas
+4. Consultar Livros → 3. Buscar por autor
+   Autor: martin
+
+   [1] Clean Code
+       Autor: Robert Martin
+       Status: Disponível
+
+   [2] Código Limpo (Clean Code)
+       Autor: Robert C. Martin
+       Status: Emprestado para: João Silva
+
+🔍 Detalhes Técnicos
+Gerenciamento de Memória
+
+Alocação dinâmica com malloc()
+Liberação adequada com free()
+Função liberar_biblioteca() garante limpeza total
+Zero vazamentos de memória (memory leaks)
+
+Comparações Case-Insensitive
+cvoid para_minusculo(char* dest, const char* src);
+
+Todas as buscas ignoram maiúsculas/minúsculas
+Utiliza tolower() para normalização
+
+Formatação de Datas
+cvoid formatar_data(time_t timestamp, char* buffer, size_t tamanho);
+
+Usa time_t para armazenamento
+Exibe formato: DD/MM/YYYY HH:MM:SS
+
+Princípios FIFO e LIFO
+
+Fila: Primeiro a entrar é o primeiro a sair
+Pilha: Último a entrar é o primeiro a sair
+Implementação manual (sem bibliotecas externas)
+
+
+⚠️ Limitações Conhecidas
+
+Não há persistência de dados - os dados são perdidos ao sair
+Sem autenticação - qualquer usuário pode fazer qualquer operação
+Remoção de livros não verifica se há solicitações na fila
+Sem data de devolução estimada ou sistema de multas
+
+
+🎓 Aprendizados
+Estruturas de Dados
+
+Implementação manual de lista, fila e pilha
+Gerenciamento de ponteiros e encadeamento
+Diferenças entre FIFO e LIFO na prática
+
+Linguagem C
+
+Alocação dinâmica de memória
+Manipulação de strings com strcpy, strcmp, strstr
+Trabalho com time_t e formatação de datas
+Passagem de ponteiros para funções
+
+Engenharia de Software
+
+Modularização e separação de responsabilidades
+Código limpo e bem comentado
+Tratamento de erros e validações
+Design de interface amigável
+
+
+🚧 Melhorias Futuras
+
+ Salvar dados em arquivo (persistência)
+ Sistema de autenticação de usuários
+ Prazo de devolução e cálculo de multas
+ Busca por ISBN e categoria
+ Função de desfazer última operação (usando a pilha)
+ Exportar relatórios para arquivo TXT/CSV
+ Interface gráfica (GUI)
+
+
+📚 Referências
+
+Material da disciplina de Estruturas de Dados
+Documentação C: cppreference.com
+CMake Documentation: cmake.org
+
+
+📄 Licença
+Este projeto foi desenvolvido para fins educacionais como parte da disciplina de Estruturas de Dados.
+
+📧 Contato
+Para dúvidas ou sugestões sobre este projeto, entre em contato com os membros da equipe.
